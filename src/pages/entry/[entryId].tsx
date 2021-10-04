@@ -68,11 +68,7 @@ const EntryPlayback = () => {
         onload: () => setSamplerIsReady(true),
       }).toDestination();
 
-      ambiencePlayer.current = new Tone.Player('/samples/wind-birbs.mp3', () =>
-        setAmbienceIsReady(true)
-      ).toDestination();
-      ambiencePlayer.current.volume.value = -33;
-      ambiencePlayer.current.loop = true;
+      setAmbienceIsReady(true)
     }
   }, []);
 

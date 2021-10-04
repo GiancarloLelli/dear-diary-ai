@@ -59,30 +59,13 @@ type Props = {
   readonly: boolean;
 };
 export const ShareAndAbout = ({ readonly }: Props) => {
-  const [aboutIsOpen, setAboutIsOpen] = useState(false);
-  const [shareIsOpen, setShareIsOpen] = useState(false);
-
   return (
     <>
-      {aboutIsOpen && <AboutOverlay setIsOpen={setAboutIsOpen} />}
-      {shareIsOpen && <ShareOverlay setIsOpen={setShareIsOpen} />}
-
       <Wrapper>
         <BottomButton onClick={() => (window.location.href = '/?write')}>NEW</BottomButton>
 
         <BottomButton onClick={() => window.location.reload()}>REPLAY</BottomButton>
-
-        <BottomButton onClick={() => setShareIsOpen(true)}>SHARE</BottomButton>
-
-        <BottomButton onClick={() => setAboutIsOpen(true)}>about</BottomButton>
       </Wrapper>
-
-      <PrivacyWrapper>
-        Entries are public to anyone with this URL.{' '}
-        <a href="/privacy" target="_blank">
-          Privacy info
-        </a>
-      </PrivacyWrapper>
     </>
   );
 };

@@ -6,7 +6,6 @@ import { generateEntry } from '../firebase/createEntry';
 import { useRouter } from 'next/router';
 import * as Tone from 'tone';
 import styled from '@emotion/styled';
-import { WinnerBadge } from '../components/WinnerBadge';
 
 const StartButton = styled.button({
   marginTop: '30px',
@@ -32,7 +31,6 @@ export default function Home() {
   });
 
   const sampler = useRef<Tone.Sampler>();
-  const ambiencePlayer = useRef<Tone.Player>();
   const loadingCoverRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const [samplerIsReady, setSamplerIsReady] = useState(false);
@@ -79,11 +77,7 @@ export default function Home() {
         onload: () => setSamplerIsReady(true),
       }).toDestination();
 
-      ambiencePlayer.current = new Tone.Player('/samples/wind-birbs.mp3', () =>
-        setAmbienceIsReady(true)
-      ).toDestination();
-      ambiencePlayer.current.volume.value = -33;
-      ambiencePlayer.current.loop = true;
+      setAmbienceIsReady(true)
     }
   }, []);
 
@@ -109,10 +103,6 @@ export default function Home() {
 
   function handleStartClick() {
     Tone.start().then(() => {
-      // Play the ambience:
-      if (ambiencePlayer.current?.state !== 'started') {
-        ambiencePlayer.current?.start();
-      }
 
       loadingCoverRef.current!.style.transition = 'opacity 500ms ease-out';
       loadingCoverRef.current!.style.opacity = '0';
@@ -181,8 +171,6 @@ export default function Home() {
         >
           {ready ? 'Begin' : 'loading'}
         </StartButton>
-
-        <WinnerBadge />
       </div>
 
       {ready && <JournalScreen sampler={sampler.current!} />}
